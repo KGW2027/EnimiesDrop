@@ -3,6 +3,8 @@
 
 #include "FlyingMobParent.h"
 
+#include "Components/Mercuna3DNavigationComponent.h"
+#include "Actors/MercunaNavOctree.h"
 #include "EnemiesDrop/Lib/QuaternionLib.h"
 
 // Sets default values
@@ -10,11 +12,17 @@ AFlyingMobParent::AFlyingMobParent()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	PathfinderTraceLength = 1500.0f;
-	IsSetBeforeMoveVector = false;
-	MoveableMinZ = 200;
-	MoveableMaxZ = 5000;
 	
+	MercunaComponent = Cast<UMercuna3DNavigationComponent, UMercunaNavigationComponent>(MobInfoData.AISettings.NavigationComponent);
+	IsSetBeforeMoveVector = false;
+	
+}
+
+bool AFlyingMobParent::PathValidate(FVector Vector) const
+{
+	bool Validity = false;
+	MercunaComponent->GetNavOctree()->IsNavigable(Vector, MobInfoData.AISettings.PatrolDistance, Validity);
+	return Validity;
 }
 
 FVector AFlyingMobParent::PathFind()
@@ -22,7 +30,8 @@ FVector AFlyingMobParent::PathFind()
 	UWorld* World = GetWorld();
 	FVector PawnLocation = GetActorLocation();
 	FVector AxisVector = GetMesh()->GetForwardVector();
-
+	const float PathfinderTraceLength = MobInfoData.AISettings.PatrolDistance;
+		
 	TArray<FVector> TraceTargets = {};
 
 	// Step 1. Register Trace Channels to 'TraceTargets'
@@ -33,7 +42,6 @@ FVector AFlyingMobParent::PathFind()
 		int Yaw = 45 * (i%8);
 		FQuat TraceQuat = UQuaternionLib::Euler_To_Quaternion(FRotator(Pitch, Yaw, 0));
 		FVector RotatedVector = TraceQuat.RotateVector(AxisVector);
-		// UE_LOG(LogTemp, Log, TEXT("Num %d. AxisVector : (%f, %f, %f)"), i, RotatedVector.X, RotatedVector.Y, RotatedVector.Z);
 		TraceTargets.Add(RotatedVector * PathfinderTraceLength);
 	}
 
@@ -48,7 +56,6 @@ FVector AFlyingMobParent::PathFind()
 	float MvDistance = 1;
 	float MvWeight = 999;
 
-	// UE_LOG(LogTemp, Log, TEXT("Forward Vector : (%f, %f, %f)"), AxisVector.X, AxisVector.Y, AxisVector.Z);
 	
 	// Line Trace 26 Paths
 	for (uint32 i = 0 ; i < TraceTargets.GetTypeSize() ; i++)
@@ -72,7 +79,7 @@ FVector AFlyingMobParent::PathFind()
 		FVector TestVector = HitResult.bBlockingHit ? HitResult.Location : TargetVector;
 		FVector FinalVector = FMath::Lerp(PawnLocation, TestVector, 0.6);
 		
-		bool bValid = IsNavigatable(FinalVector);
+		bool bValid = PathValidate(FinalVector);
 		if(!bValid) continue;
 		
 		float Dist = FVector::Distance(PawnLocation, FinalVector);
@@ -80,7 +87,6 @@ FVector AFlyingMobParent::PathFind()
 		// Refrain from Repeating move,
 		if(IsSetBeforeMoveVector)
 			Weight *= 1 - FVector::Distance(FinalVector, BeforeMoveVector) / (PathfinderTraceLength*2);
-		// UE_LOG(LogTemp, Log, TEXT("Final Vector %d : (%f, %f, %f) => Weight : %f // MvDist : %f, Dist : %f // Hit? %d"), i, Axis.X, Axis.Y, Axis.Z, Weight, MvDistance, Dist, HitResult.bBlockingHit);
 		
 		if ( (MvDistance < Dist) || (MvDistance == Dist && MvWeight > Weight) || (MvDistance == Dist && MvWeight == Weight && FMath::RandRange(0, 100) < 50))
 		{
@@ -92,30 +98,6 @@ FVector AFlyingMobParent::PathFind()
 
 	BeforeMoveVector = MoveToVector;
 	IsSetBeforeMoveVector = true;
-	// DrawDebugLine(World, PawnLocation, MoveToVector, FColor::Green, false, 3.0f);
-	// UE_LOG(LogTemp, Log, TEXT("SELECT %d, Weight : %f"), SelectKey, MvWeight);
 	
 	return MoveToVector;
 }
-
-// Called when the game starts or when spawned
-void AFlyingMobParent::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void AFlyingMobParent::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void AFlyingMobParent::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
