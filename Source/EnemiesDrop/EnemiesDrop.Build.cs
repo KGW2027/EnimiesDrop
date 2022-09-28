@@ -6,7 +6,14 @@ public class EnemiesDrop : ModuleRules
 {
 	public EnemiesDrop(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PrivateDependencyModuleNames.AddRange(new string[] { });
+		
+		PrivateIncludePaths.AddRange(
+			new string[] {
+				"Mercuna3DNavigation/Private",
+			}
+		);
+		
+		PrivateDependencyModuleNames.AddRange(new string[] {"Mercuna"});
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
