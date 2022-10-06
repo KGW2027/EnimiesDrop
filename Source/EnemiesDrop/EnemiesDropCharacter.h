@@ -29,46 +29,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
-	// RPG Character Status
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Character)
-	float CurrentHealth;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Character)
-	float CurrentMana;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Character)
-	int64 CurrentExp;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Character)
-	float MaxHealth;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Character)
-	float MaxMana;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Character)
-	int64 MaxExp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Character)
-	int Level;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Character)
-	bool bUnlockSpecialOne;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Character)
-	bool bUsableSpecialOne;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Character)
-	bool bUnlockSpecialTwo;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Character)
-	bool bUsableSpecialTwo;
-
-	UFUNCTION(BlueprintCallable)
-	void LevelUp();
-
-	UFUNCTION(BlueprintCallable)
-	void Heal(float Percentage);
-
 protected:
 
 	/** Called for forwards/backward input */
@@ -96,6 +56,8 @@ protected:
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
 	void ToggleSprint();
+
+	void ToggleAttackMode();
 
 protected:
 	// APawn interface

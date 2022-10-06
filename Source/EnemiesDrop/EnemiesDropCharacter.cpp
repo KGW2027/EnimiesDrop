@@ -14,19 +14,9 @@
 
 AEnemiesDropCharacter::AEnemiesDropCharacter()
 {
-	// Set default status values
-	Level = 0;
-	LevelUp();
-
-	// Special skills are default unlocked.
-	bUnlockSpecialOne = false;
-	bUsableSpecialOne = false;
-	bUnlockSpecialTwo = false;
-	bUsableSpecialTwo = false;
-	
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-
+	
 	// set our turn rate for input
 	TurnRateGamepad = 50.f;
 
@@ -114,34 +104,6 @@ void AEnemiesDropCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
 
-void AEnemiesDropCharacter::LevelUp()
-{
-	Level += 1;
-	CurrentExp = 0;
-
-	const int32 BaseHealth = 100;
-	const int32 HealthMultiplier = 500;
-	const int32 BaseMana = 100;
-	const int32 ManaMultiplier = 30;
-	const int64 BaseExp = 0;
-	const int64 ExpMultiplier = 1000;
-	
-	MaxHealth = BaseHealth + HealthMultiplier * FMath::Sqrt(Level);
-	MaxMana = BaseMana + ManaMultiplier * Level;
-	MaxExp = BaseExp + ExpMultiplier * FMath::Pow(Level, 2);
-	
-	CurrentHealth = MaxHealth;
-	CurrentMana = MaxMana;
-}
-
-void AEnemiesDropCharacter::Heal(float Percentage)
-{
-	int ResultHealth = CurrentHealth + MaxHealth * (Percentage/100);
-	int ResultMana = CurrentMana + MaxMana * (Percentage/100);
-	CurrentHealth = ResultHealth >= MaxHealth ? MaxHealth : ResultHealth;
-	CurrentMana = ResultMana >= MaxMana ? MaxMana : ResultMana;
-}
-
 void AEnemiesDropCharacter::MoveForward(float Value)
 {
 	if ((Controller != nullptr) && (Value != 0.0f))
@@ -185,4 +147,3 @@ void AEnemiesDropCharacter::ToggleSprint()
 		GetCharacterMovement()->MaxWalkSpeed = 350;
 	}
 }
-
