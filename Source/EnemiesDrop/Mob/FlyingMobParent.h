@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "MobParent.h"
+#include "Components/Mercuna3DNavigationComponent.h"
 #include "FlyingMobParent.generated.h"
 
 UCLASS()
-class ENEMIESDROP_API AFlyingMobParent : public ACharacter
+class ENEMIESDROP_API AFlyingMobParent : public AMobParent
 {
 	GENERATED_BODY()
 
@@ -17,31 +18,14 @@ public:
 
 	FVector BeforeMoveVector;
 	bool IsSetBeforeMoveVector;
-
-	UPROPERTY(BlueprintReadWrite, meta = (Category = "Pathfinding"))
-	float PathfinderTraceLength;
-
-	UPROPERTY(BlueprintReadWrite, meta = (DisplayName = "Moveable Min Z", Category = "Pathfinding"))
-	float MoveableMinZ;
-
-	UPROPERTY(BlueprintReadWrite, meta = (DisplayName = "Moveable Max Z", Category = "Pathfinding"))
-	float MoveableMaxZ;
-
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "PathFind"))
-	FVector PathFind();
 	
-	UFUNCTION(BlueprintImplementableEvent)
-	bool IsNavigatable(FVector Vector);
+	bool PathValidate(FVector Vector) const;
+
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	UMercuna3DNavigationComponent* MercunaComponent;
 	
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+public:
+	virtual FVector PathFind() override final;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
 };
