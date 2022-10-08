@@ -40,12 +40,21 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	FMobInfoData GetMobData();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	UMercunaNavigationComponent* InitNavComponent();
+
 	// 몬스터의 액션
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Hit(APawn* Victim, float Damage);
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	bool Attack();
+	bool Attack(APawn* Target);
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsAttackCooldown;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ToggleStatusMode(bool ChaseMode);
 
 
 protected:

@@ -4,11 +4,6 @@
 #include "Actors/MercunaNavGrid.h"
 #include "GroundMobParent.h"
 
-// Sets default values
-AGroundMobParent::AGroundMobParent()
-{
-	MercunaComponent = Cast<UMercunaGroundNavigationComponent, UMercunaNavigationComponent>(MobInfoData.AISettings.NavigationComponent);
-}
 
 
 FVector AGroundMobParent::PathFind()
@@ -25,4 +20,11 @@ FVector AGroundMobParent::PathFind()
 
 	
 	return TargetLoc;
+}
+
+void AGroundMobParent::BeginPlay()
+{
+	MercunaComponent = Cast<UMercunaGroundNavigationComponent>(InitNavComponent());
+	
+	Super::BeginPlay();
 }

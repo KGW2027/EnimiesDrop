@@ -12,12 +12,11 @@ class ENEMIESDROP_API AGroundMobParent : public AMobParent
 {
 	GENERATED_BODY()
 
-public:
-	AGroundMobParent();
-
 protected:
 	UMercunaGroundNavigationComponent* MercunaComponent;
 
 public:
 	virtual FVector PathFind() override final;
+	
+	virtual void BeginPlay() override;
 };

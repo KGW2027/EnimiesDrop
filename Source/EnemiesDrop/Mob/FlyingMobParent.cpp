@@ -13,7 +13,6 @@ AFlyingMobParent::AFlyingMobParent()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	MercunaComponent = Cast<UMercuna3DNavigationComponent, UMercunaNavigationComponent>(MobInfoData.AISettings.NavigationComponent);
 	IsSetBeforeMoveVector = false;
 	
 }
@@ -100,4 +99,11 @@ FVector AFlyingMobParent::PathFind()
 	IsSetBeforeMoveVector = true;
 	
 	return MoveToVector;
+}
+
+void AFlyingMobParent::BeginPlay()
+{
+	MercunaComponent = Cast<UMercuna3DNavigationComponent>(InitNavComponent());
+	
+	Super::BeginPlay();
 }

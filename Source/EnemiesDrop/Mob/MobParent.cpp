@@ -39,6 +39,7 @@ void AMobParent::BeginPlay()
 {
 	MobInfoData = GetMobData();
 	Health = MobInfoData.MobStats.MaxHealth;
+	bIsAttackCooldown = false;
 	
 	Super::BeginPlay();
 	

@@ -29,6 +29,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
+	void ToggleSprint();
+
 protected:
 
 	/** Called for forwards/backward input */
@@ -55,9 +57,7 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
-	void ToggleSprint();
-
-	void ToggleAttackMode();
+	// void ToggleAttackMode();
 
 protected:
 	// APawn interface

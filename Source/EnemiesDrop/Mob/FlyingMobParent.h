@@ -28,4 +28,5 @@ protected:
 public:
 	virtual FVector PathFind() override final;
 
+	virtual void BeginPlay() override;
 };

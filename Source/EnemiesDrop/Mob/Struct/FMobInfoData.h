@@ -1,5 +1,6 @@
 #pragma once
 
+#include "EAILevel.h"
 #include "FMobDropTable.h"
 #include "Mercuna/Public/Components/MercunaNavigationComponent.h"
 #include "FMobInfoData.generated.h"
@@ -22,7 +23,26 @@ struct FMobAISettings
 	float PatrolDistance;
 
 	UPROPERTY(BlueprintReadWrite)
-	UMercunaNavigationComponent* NavigationComponent;
+	float PlayerPerceptionDistance;
+
+	UPROPERTY(BlueprintReadWrite)
+	float MovablePerceptionDistance;
+
+	UPROPERTY(BlueprintReadWrite)
+	float SoundPerceptionDistance;
+
+	UPROPERTY(BlueprintReadWrite)
+	float SenseVolatility;
+
+	UPROPERTY(BlueprintReadWrite)
+	EAILevel AILevel;
+
+	UPROPERTY(BlueprintReadWrite)
+	float AttackRange;
+
+	UPROPERTY(BlueprintReadWrite)
+	float AttackCooldown;
+	
 };
 
 /*
