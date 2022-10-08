@@ -29,6 +29,10 @@
 		{
 			"Name": "NiagaraFluids",
 			"Enabled": true
+		},
+		{
+			"Name": "RefreshAllNodes",
+			"Enabled": true
 		}
 	]
 }
