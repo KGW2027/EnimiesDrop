@@ -47,7 +47,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Hit(APawn* Victim, float Damage);
 	
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool Attack(APawn* Target);
 
 	UPROPERTY(BlueprintReadOnly)

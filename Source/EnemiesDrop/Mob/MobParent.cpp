@@ -34,6 +34,19 @@ void AMobParent::MobDead_Implementation(APawn* Victim)
 }
 
 
+bool AMobParent::Attack_Implementation(APawn* Target)
+{
+	bIsAttackCooldown = true;
+	FTimerHandle AtkCoolHandle;
+	float Time = GetMobData().AISettings.AttackCooldown;
+	GetWorld()->GetTimerManager().SetTimer(AtkCoolHandle, FTimerDelegate::CreateLambda([&]()
+	{
+		bIsAttackCooldown = false;
+	}), Time, false);
+	
+	return true;
+}
+
 // Called when the game starts or when spawned
 void AMobParent::BeginPlay()
 {

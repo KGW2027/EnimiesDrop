@@ -21,7 +21,6 @@ public:
 	
 	bool PathValidate(FVector Vector) const;
 
-
 protected:
 	UMercuna3DNavigationComponent* MercunaComponent;
 	
