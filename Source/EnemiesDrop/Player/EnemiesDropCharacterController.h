@@ -25,6 +25,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	bool bIsRunning;
+	
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsControlAtUI;
 
 public:
 	virtual void SetupInputComponent() override;

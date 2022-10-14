@@ -11,6 +11,7 @@ AEnemiesDropCharacterController::AEnemiesDropCharacterController()
 	CameraTurnRate = 50.0f;
 	bIsJumping = false;
 	bIsRunning = false;
+	bIsControlAtUI = false;
 }
 
 
@@ -54,7 +55,7 @@ void AEnemiesDropCharacterController::Run()
 
 void AEnemiesDropCharacterController::MoveFB(float Axis)
 {
-	if (Axis != 0.0f)
+	if (Axis != .0f && !bIsControlAtUI)
 	{
 		// find out which way is forward
 		const FRotator Rotation = GetControlRotation();
@@ -69,7 +70,7 @@ void AEnemiesDropCharacterController::MoveFB(float Axis)
 
 void AEnemiesDropCharacterController::MoveLR(float Axis)
 {
-	if(Axis != .0f)
+	if(Axis != .0f && !bIsControlAtUI)
 	{
 		const FRotator Rotation = GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -82,11 +83,13 @@ void AEnemiesDropCharacterController::MoveLR(float Axis)
 
 void AEnemiesDropCharacterController::InputYaw(float Axis)
 {
-	AddYawInput(Axis * CameraTurnRate * GetWorld()->GetDeltaSeconds());
+	if(!bIsControlAtUI)
+		AddYawInput(Axis * CameraTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 void AEnemiesDropCharacterController::InputPitch(float Axis)
 {
-	AddPitchInput(Axis * CameraTurnRate * GetWorld()->GetDeltaSeconds());
+	if(!bIsControlAtUI)
+		AddPitchInput(Axis * CameraTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
