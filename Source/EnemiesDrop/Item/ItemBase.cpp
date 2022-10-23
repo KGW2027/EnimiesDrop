@@ -3,22 +3,31 @@
 
 #include "ItemBase.h"
 
-// Sets default values
 AItemBase::AItemBase()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
-// Called when the game starts or when spawned
+void AItemBase::PickupThis(ARPGCharacter* User)
+{
+	FInvItemStack ItemStack;
+	ItemStack.Item = this;
+	ItemStack.ItemCount = DroppedCount;
+	ItemStack.MaxCount = MaxStackSize;
+	
+	if(User->PickupItem(ItemStack))
+		Destroy();
+}
+
 void AItemBase::BeginPlay()
 {
+	InitializeItemData(ItemName, MaxStackSize, ItemReal, ItemThumbnail);
+	
 	Super::BeginPlay();
 	
 }
 
-// Called every frame
 void AItemBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

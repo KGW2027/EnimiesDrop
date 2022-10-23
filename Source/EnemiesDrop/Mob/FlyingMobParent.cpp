@@ -7,16 +7,28 @@
 #include "Actors/MercunaNavOctree.h"
 #include "EnemiesDrop/Lib/QuaternionLib.h"
 
-// Sets default values
+/**
+ * @date 2022/10/23
+ * @brief Flyable 몬스터에 대한 클래스이다.
+ *
+ * @var IsSetBeforeMoveVector BeforeMoveVector가 설정되었는가 확인
+ * @var BeforeMoveVector 현재 이동 직전에 있었던 위치로, 왔던 자리로 다시 돌아가는 일을 최대한 줄이기 위해 존재
+ */
 AFlyingMobParent::AFlyingMobParent()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
 	IsSetBeforeMoveVector = false;
-	
 }
 
+/**
+ * @date 2022/10/23
+ * @brief 이 벡터가 이동가능한 위치인지를 판별
+ *
+ * @param[in] Vector 이동할 위치
+ * @return bool 이동가능한 위치인지의 여부
+ */
 bool AFlyingMobParent::PathValidate(FVector Vector) const
 {
 	bool Validity = false;

@@ -21,6 +21,7 @@
  * 각 몬스터의 최대체력, 현재체력, 드랍테이블등은 모두 여기서 상속되어 설정한다.
  */
 
+class UMercunaNavigationComponent;
 UCLASS()
 class ENEMIESDROP_API AMobParent : public ACharacter
 {
@@ -31,29 +32,29 @@ public:
 	AMobParent();
 
 	// 몬스터의 정보
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "MobStatus")
 	float Health;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "MobInfo")
 	FMobInfoData MobInfoData;
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "MobInfo")
 	FMobInfoData GetMobData();
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, Category = "MobInfo")
 	UMercunaNavigationComponent* InitNavComponent();
 
 	// 몬스터의 액션
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "MobAction")
 	void Hit(APawn* Victim, float Damage);
 	
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "MobAction")
 	bool Attack(APawn* Target);
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "MobStatus")
 	bool bIsAttackCooldown;
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "MobStatus")
 	void ToggleStatusMode(bool ChaseMode);
 
 
@@ -62,7 +63,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	// 몬스터의 액션(사망)
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent, Category = "MobAction")
 	void MobDead(APawn* Victim);
 
 	void CoinDrop(FVector Location, float Min, float Max);
@@ -77,6 +78,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// GroundMobParent or FlyingMobParent에서 상속받아 구현할 내용
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "PathFind"))
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "PathFind"), Category = "MobAction")
 	virtual FVector PathFind();
 };

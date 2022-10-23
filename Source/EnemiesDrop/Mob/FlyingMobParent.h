@@ -17,6 +17,7 @@ public:
 	AFlyingMobParent();
 
 	FVector BeforeMoveVector;
+	
 	bool IsSetBeforeMoveVector;
 	
 	bool PathValidate(FVector Vector) const;

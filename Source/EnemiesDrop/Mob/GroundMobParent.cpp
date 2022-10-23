@@ -4,6 +4,12 @@
 #include "GroundMobParent.h"
 
 
+
+/**
+ * @date 2022/10/23
+ * @brief Ground 몬스터에 대한 클래스이다.
+ */
+
 FVector AGroundMobParent::PathFind()
 {
 	FVector TargetLoc;

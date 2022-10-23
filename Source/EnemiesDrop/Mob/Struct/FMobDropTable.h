@@ -6,7 +6,9 @@
 
 
 /**
- * 몬스터의 드랍테이블 내 각 아이템들의 확률을 설정하기 위한 구조체
+ * @date 2022/10/23
+ * @struct FDropItem
+ * @brief 몬스터의 드랍테이블 내 각 아이템들의 확률을 설정하기 위한 구조체
  */
 USTRUCT(BlueprintType)
 struct FDropItem
@@ -21,8 +23,10 @@ struct FDropItem
 	
 };
 
-/*
- * 몬스터가 죽었을 때 보상처리를 위한 구조체
+/**
+ * @date 2022/10/23
+ * @struct FMobDropTable
+ * @brief 몬스터가 죽었을 때 보상처리를 위한 드랍테이블 관리 구조체
  */
 USTRUCT(BlueprintType)
 struct FMobDropTable

@@ -2,11 +2,12 @@
 
 #include "EAILevel.h"
 #include "FMobDropTable.h"
-#include "Mercuna/Public/Components/MercunaNavigationComponent.h"
 #include "FMobInfoData.generated.h"
 
-/*
- * 몬스터의 BehaviorTree 내 수치조정을 위한 구조체
+/**
+ * @date 2022/10/23
+ * @struct FMobAISettings
+ * @brief 몬스터의 Behavior Tree에서 AI와 관련된 수치들을 조정할 때 사용될 구조체
  */
 USTRUCT(BlueprintType)
 struct FMobAISettings
@@ -45,8 +46,10 @@ struct FMobAISettings
 	
 };
 
-/*
- *	몬스터의 체력, 방어력 등 스텟을 설정하기 위한 구조체
+/**
+ * @date 2022/10/23
+ * @struct FMobStats
+ * @brief 몬스터의 메타데이터를 설정하는 구조체
  */
 USTRUCT(BlueprintType)
 struct FMobStats
@@ -66,8 +69,10 @@ struct FMobStats
 	float PhysicsDefence;
 };
 
-/*
- * 몬스터의 정보를 저장하기 위한 구조체
+/**
+ * @date 2022/10/23
+ * @struct FMobInfoData
+ * @brief 몬스터의 메타데이터, 드랍테이블, AI수치 등을 저장하는 래퍼 구조체
  */
 USTRUCT(BlueprintType)
 struct FMobInfoData
